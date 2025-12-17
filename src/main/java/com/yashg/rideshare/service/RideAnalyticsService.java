@@ -21,8 +21,7 @@ public class RideAnalyticsService {
         Aggregation aggregation = newAggregation(
                 group("createdDate").count().as("rideCount"),
                 project("rideCount").and("_id").as("date"),
-                sort(org.springframework.data.domain.Sort.Direction.DESC, "date")
-        );
+                sort(org.springframework.data.domain.Sort.Direction.DESC, "date"));
 
         AggregationResults<Map> results = mongoTemplate.aggregate(aggregation, "rides", Map.class);
         return Map.of("ridesPerDay", results.getMappedResults());
@@ -36,11 +35,10 @@ public class RideAnalyticsService {
                         .sum(org.springframework.data.mongodb.core.aggregation.ConditionalOperators
                                 .when(Criteria.where("status").is("COMPLETED"))
                                 .then(1)
-                                .otherwise(0)
-                        ).as("completedRides")
+                                .otherwise(0))
+                        .as("completedRides")
                         .avg("distanceKm").as("avgDistance")
-                        .sum("fare").as("totalFare")
-        );
+                        .sum("fare").as("totalFare"));
 
         AggregationResults<Map> results = mongoTemplate.aggregate(aggregation, "rides", Map.class);
         return results.getUniqueMappedResult() != null ? results.getUniqueMappedResult() : Map.of();
@@ -51,8 +49,7 @@ public class RideAnalyticsService {
                 match(Criteria.where("userId").is(userId).and("status").is("COMPLETED")),
                 group()
                         .sum("fare").as("totalSpent")
-                        .count().as("completedRides")
-        );
+                        .count().as("completedRides"));
 
         AggregationResults<Map> results = mongoTemplate.aggregate(aggregation, "rides", Map.class);
         return results.getUniqueMappedResult() != null ? results.getUniqueMappedResult() : Map.of();
@@ -61,8 +58,7 @@ public class RideAnalyticsService {
     public Map<String, Object> getStatusSummary() {
         Aggregation aggregation = newAggregation(
                 group("status").count().as("count"),
-                project("count").and("_id").as("status")
-        );
+                project("count").and("_id").as("status"));
 
         AggregationResults<Map> results = mongoTemplate.aggregate(aggregation, "rides", Map.class);
         return Map.of("statusSummary", results.getMappedResults());

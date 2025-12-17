@@ -13,9 +13,9 @@ public class Ride {
     @Id
     private String id;
 
-    private String userId;       // passenger id
-    private String driverId;     // driver id
-    
+    private String userId; // passenger id
+    private String driverId; // driver id
+
     private String passengerUsername;
     private String driverUsername;
 
@@ -25,7 +25,7 @@ public class Ride {
     private Double fare;
     private Double distanceKm;
 
-    private String status;    // REQUESTED / ACCEPTED / COMPLETED
+    private String status; // REQUESTED / ACCEPTED / COMPLETED
     private Date createdAt;
-    private Date createdDate;  // for daily grouping (LocalDate stored as Date)
+    private Date createdDate; // for daily grouping (LocalDate stored as Date)
 }

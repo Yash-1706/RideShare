@@ -32,11 +32,11 @@ public class RideService {
         ride.setPickupLocation(request.getPickupLocation());
         ride.setDropLocation(request.getDropLocation());
         ride.setStatus("REQUESTED");
-        
+
         Date now = new Date();
         ride.setCreatedAt(now);
         ride.setCreatedDate(now);
-        
+
         // Set default fare and distance if provided in request
         ride.setFare(0.0);
         ride.setDistanceKm(0.0);

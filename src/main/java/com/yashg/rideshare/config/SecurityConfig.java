@@ -28,8 +28,7 @@ public class SecurityConfig {
                 .requestMatchers("/api/v1/user/**").hasRole("USER")
                 .requestMatchers("/api/v1/rides/**").authenticated()
                 .requestMatchers("/api/v1/analytics/**").authenticated()
-                .anyRequest().authenticated()
-        );
+                .anyRequest().authenticated());
 
         http.sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
         http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);

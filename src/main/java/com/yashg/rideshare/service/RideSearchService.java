@@ -22,8 +22,7 @@ public class RideSearchService {
     public List<Ride> searchByLocation(String keyword) {
         Criteria criteria = new Criteria().orOperator(
                 Criteria.where("pickupLocation").regex(keyword, "i"),
-                Criteria.where("dropLocation").regex(keyword, "i")
-        );
+                Criteria.where("dropLocation").regex(keyword, "i"));
         Query query = new Query(criteria);
         return mongoTemplate.find(query, Ride.class);
     }
@@ -58,8 +57,7 @@ public class RideSearchService {
     public List<Ride> getRidesByUserIdAndStatus(String userId, String status) {
         Criteria criteria = new Criteria().andOperator(
                 Criteria.where("userId").is(userId),
-                Criteria.where("status").is(status)
-        );
+                Criteria.where("status").is(status));
         Query query = new Query(criteria);
         return mongoTemplate.find(query, Ride.class);
     }
@@ -67,8 +65,7 @@ public class RideSearchService {
     public List<Ride> getActiveRidesForDriver(String driverId) {
         Criteria criteria = new Criteria().andOperator(
                 Criteria.where("driverId").is(driverId),
-                Criteria.where("status").is("ACCEPTED")
-        );
+                Criteria.where("status").is("ACCEPTED"));
         Query query = new Query(criteria);
         return mongoTemplate.find(query, Ride.class);
     }
@@ -76,12 +73,10 @@ public class RideSearchService {
     public List<Ride> filterByStatusAndLocation(String status, String keyword) {
         Criteria locationCriteria = new Criteria().orOperator(
                 Criteria.where("pickupLocation").regex(keyword, "i"),
-                Criteria.where("dropLocation").regex(keyword, "i")
-        );
+                Criteria.where("dropLocation").regex(keyword, "i"));
         Criteria criteria = new Criteria().andOperator(
                 Criteria.where("status").is(status),
-                locationCriteria
-        );
+                locationCriteria);
         Query query = new Query(criteria);
         return mongoTemplate.find(query, Ride.class);
     }
@@ -92,8 +87,7 @@ public class RideSearchService {
         if (keyword != null && !keyword.isEmpty()) {
             criteria.orOperator(
                     Criteria.where("pickupLocation").regex(keyword, "i"),
-                    Criteria.where("dropLocation").regex(keyword, "i")
-            );
+                    Criteria.where("dropLocation").regex(keyword, "i"));
         }
 
         if (status != null && !status.isEmpty()) {
