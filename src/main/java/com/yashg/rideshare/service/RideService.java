@@ -28,10 +28,18 @@ public class RideService {
 
         Ride ride = new Ride();
         ride.setUserId(user.getId());
+        ride.setPassengerUsername(username);
         ride.setPickupLocation(request.getPickupLocation());
         ride.setDropLocation(request.getDropLocation());
         ride.setStatus("REQUESTED");
-        ride.setCreatedAt(new Date());
+        
+        Date now = new Date();
+        ride.setCreatedAt(now);
+        ride.setCreatedDate(now);
+        
+        // Set default fare and distance if provided in request
+        ride.setFare(0.0);
+        ride.setDistanceKm(0.0);
 
         return rideRepository.save(ride);
     }
@@ -55,6 +63,7 @@ public class RideService {
         }
 
         ride.setDriverId(driver.getId());
+        ride.setDriverUsername(username);
         ride.setStatus("ACCEPTED");
         return rideRepository.save(ride);
     }
