@@ -33,10 +33,11 @@ public class RideAnalyticsService {
                 match(Criteria.where("driverId").is(driverId)),
                 group()
                         .count().as("totalRides")
-                        .sum(new org.springframework.data.mongodb.core.aggregation.ConditionalOperators.Cond(
-                                org.springframework.data.mongodb.core.aggregation.ComparisonOperators.valueOf("status").equalToValue("COMPLETED"),
-                                1, 0
-                        )).as("completedRides")
+                        .sum(org.springframework.data.mongodb.core.aggregation.ConditionalOperators
+                                .when(Criteria.where("status").is("COMPLETED"))
+                                .then(1)
+                                .otherwise(0)
+                        ).as("completedRides")
                         .avg("distanceKm").as("avgDistance")
                         .sum("fare").as("totalFare")
         );
