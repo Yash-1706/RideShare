@@ -15,10 +15,17 @@ public class Ride {
 
     private String userId;       // passenger id
     private String driverId;     // driver id
+    
+    private String passengerUsername;
+    private String driverUsername;
 
     private String pickupLocation;
     private String dropLocation;
 
+    private Double fare;
+    private Double distanceKm;
+
     private String status;    // REQUESTED / ACCEPTED / COMPLETED
     private Date createdAt;
+    private Date createdDate;  // for daily grouping (LocalDate stored as Date)
 }
